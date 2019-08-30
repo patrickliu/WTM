@@ -11,13 +11,13 @@
     -->
     <VersionSuffix Condition="'$(VersionSuffix)' == ''">alpha</VersionSuffix>
 
-    <FileVersion Condition="'$(BuildNumber)' != ''">$(VersionPrefix).$(BuildNumber)</FileVersion>
+    <FileVersion Condition="'$(Build.BuildNumber)' != ''">$(VersionPrefix).$(Build.BuildNumber)</FileVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
 
-    <Version Condition="'$(VersionSuffix)' != '' AND '$(BuildNumber)' != ''">$(VersionPrefix)-$(VersionSuffix)-$(BuildNumber)</Version>
-    <Version Condition="'$(VersionSuffix)' == '' AND '$(BuildNumber)' == ''">$(VersionPrefix)</Version>
+    <Version Condition="'$(VersionSuffix)' != '' AND '$(Build.BuildNumber)' != ''">$(VersionPrefix)-$(VersionSuffix)-$(Build.BuildNumber)</Version>
+    <Version Condition="'$(VersionSuffix)' == '' AND '$(Build.BuildNumber)' == ''">$(VersionPrefix)</Version>
 
-    <PackageVersion Condition="'$(VersionSuffix)' != '' AND '$(BuildNumber)' != ''">$(VersionPrefix)-$(VersionSuffix)-$(BuildNumber)</PackageVersion>
+    <PackageVersion Condition="'$(VersionSuffix)' != '' AND '$(Build.BuildNumber)' != ''">$(VersionPrefix)-$(VersionSuffix)-$(Build.BuildNumber)</PackageVersion>
     <PackageVersion Condition="'$(VersionSuffix)' == ''">$(VersionPrefix)</PackageVersion>
   </PropertyGroup>
 
