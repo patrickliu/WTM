@@ -6,6 +6,8 @@
 trigger:
   branches:
     include:
+    - master
+    - develop
     - feature/azure
   paths:
     exclude:
@@ -22,33 +24,37 @@ jobs:
     vmImage: 'ubuntu-16.04'
 
 
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+
   steps:
-  - task: DotNetCoreInstaller@0
+  - task: DotNetCoreInstaller@1
     displayName: install
     inputs:
       version: '2.2.300'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: restore
     inputs:
-      command: restore
-      projects: './WalkingTec.Mvvm.sln'
+      command: 'restore'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: build
     inputs:
-      command: build
-      projects: './WalkingTec.Mvvm.sln'
-      arguments: '-c Debug'
-
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
     displayName: test
     inputs:
-      command: test
-
+      command: 'test'
+      projects: '-c $(buildConfiguration)'
+      testRunTitle: 'test'
 
 
 
@@ -56,65 +62,87 @@ jobs:
   pool:
     vmImage: 'macOS-10.14'
 
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
 
   steps:
-  - task: DotNetCoreInstaller@0
+  - task: DotNetCoreInstaller@1
     displayName: install
     inputs:
       version: '2.2.300'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: restore
     inputs:
-      command: restore
-      projects: './WalkingTec.Mvvm.sln'
+      command: 'restore'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: build
     inputs:
-      command: build
-      projects: './WalkingTec.Mvvm.sln'
-      arguments: '-c Debug'
-
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
     displayName: test
     inputs:
-      command: test
-
+      command: 'test'
+      projects: '-c $(buildConfiguration)'
+      testRunTitle: 'test'
 
 
 
 - job: Windows
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
 
   steps:
-  - task: DotNetCoreInstaller@0
+  - task: DotNetCoreInstaller@1
     displayName: install
     inputs:
       version: '2.2.300'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: restore
     inputs:
-      command: restore
-      projects: './WalkingTec.Mvvm.sln'
+      command: 'restore'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
-
-  - task: DotNetCoreCLI@1
+  - task: DotNetCoreCLI@2
     displayName: build
     inputs:
-      command: build
-      projects: './WalkingTec.Mvvm.sln'
-      arguments: '-c Debug'
-
+      command: 'build'
+      projects: '$(solution)'
+      arguments: '-c $(buildConfiguration)'
 
   - task: DotNetCoreCLI@2
     displayName: test
     inputs:
-      command: test
+      command: 'test'
+      projects: '-c $(buildConfiguration)'
+      testRunTitle: 'test'
+
+
+  # - task: DotNetCoreCLI@2
+  #   inputs:
+  #     command: 'pack'
+  #     packagesToPack: 'src/**/*.csproj'
+  #     includesymbols: true
+  #     versioningScheme: 'byBuildNumber'
+
+  # - task: DotNetCoreCLI@2
+  #   inputs:
+  #     command: 'push'
+  #     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+  #     nuGetFeedType: 'external'
+  #     publishFeedCredentials: 'nuget-sundot'
