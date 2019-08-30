@@ -53,7 +53,6 @@ jobs:
     displayName: test
     inputs:
       command: 'test'
-      projects: '-c $(buildConfiguration)'
       testRunTitle: 'test'
 
 
@@ -91,7 +90,6 @@ jobs:
     displayName: test
     inputs:
       command: 'test'
-      projects: '-c $(buildConfiguration)'
       testRunTitle: 'test'
 
 
@@ -129,7 +127,6 @@ jobs:
     displayName: test
     inputs:
       command: 'test'
-      projects: '-c $(buildConfiguration)'
       testRunTitle: 'test'
 
 
