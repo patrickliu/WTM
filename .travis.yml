@@ -1,41 +1,31 @@
 language: csharp
-solution: WalkingTec.Mvvm.sln
-
-# notifications:      # 每次构建的时候是否通知，如果不想收到通知邮箱（个人感觉邮件贼烦），那就设置 false 吧
-#   email: false
-
-sudo: required    # sudo 权限
-
+solution: DeepClone.sln
+dist: xenial
+dotnet: 2.2.300
 mono: none
 
-dotnet: 2.2.104
+branches:
+  only:
+  - master
+
+os:
+  - linux
+  - osx
+
+osx_image: xcode9.1
+
+before_install:
+
+#env:
+  #global:
+    #- DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+    #- DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
 
 install:
-  - dotnet restore
+
 
 script:
-#  - dotnet restore
- - dotnet build
-#  - dotnet test MTAServiceStatus.Tests/MTAServiceStatus.Tests.csproj
-
-# os:
-#   - linux
-#   - osx
-  
-# osx_image: xcode9.1
-
-# branches:
-#   only:
-#     - master
-#     - develop
- 
-# before_install:
-#   - git fetch --unshallow # Travis always does a shallow clone, but GitVersion needs the full history including branches and tags
-#   - git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-#   - git fetch origin
-
-# script:
-#   - if test "$TRAVIS_OS_NAME" == "linux"; then dotnet restore; fi
-#   - if test "$TRAVIS_OS_NAME" == "osx"; then dotnet restore --disable-parallel; fi
-#   - dotnet build -c Release
-#   #- if test "$TRAVIS_OS_NAME" == "linux"; then dotnet test -c Release ./test/EasyCaching.UnitTests/EasyCaching.UnitTests.csproj; fi
+ - dotnet restore
+ - dotnet build -c Release
+ - dotnet test
